@@ -1,29 +1,44 @@
 CC=gcc
-CPP_FLAGS=-I ./include
+CPPFLAGS=
 SRC_DIR=./src
 BUILD_DIR=./build
-TEST_DIR=${BUILD_DIR}/tests
+SO_DIR=$(BUILD_DIR)/lib
+INCLUDE_DIR=$(BUILD_DIR)/include
+TEST_DIR=$(BUILD_DIR)/tests
 MKDIR = mkdir -p
 
 .PHONY: directories all
 
-all: directories tests 
+build: directories BinaryStringShared HexStringShared
 
-directories: ${BUILD_DIR} ${TEST_DIR}
+all: directories build tests 
+
+directories: ${SO_DIR} ${INCLUDE_DIR} ${TEST_DIR}
 
 tests: BinaryStringTest HexStringTest
 
-${BUILD_DIR}:
-	${MKDIR} ${BUILD_DIR}
+${SO_DIR}:
+	${MKDIR} ${SO_DIR}
+
+${INCLUDE_DIR}:
+	${MKDIR} ${INCLUDE_DIR}
 
 ${TEST_DIR}:
 	${MKDIR} ${TEST_DIR}
 
+BinaryStringShared: ${SRC_DIR}/BinaryString.cpp
+	$(CC) $(CPPFLAGS) -shared -fPIC ${SRC_DIR}/BinaryString.cpp -o ${SO_DIR}/libBinaryString.so
+	$(shell cp ./include/BinaryString.h $(INCLUDE_DIR)/BinaryString.h)
+
+HexStringShared: ${SRC_DIR}/HexString.cpp
+	$(CC) $(CPPFLAGS) -shared -fPIC ${SRC_DIR}/HexString.cpp -o ${SO_DIR}/libHexString.so
+	$(shell cp ./include/HexString.h $(INCLUDE_DIR)/HexString.h)
+
 BinaryStringTest: ${SRC_DIR}/BinaryStringTest.cpp
-	$(CC) $(CPP_FLAGS) ${SRC_DIR}/BinaryString.cpp ${SRC_DIR}/BinaryStringTest.cpp -o ${TEST_DIR}/BinaryStringTest
+	$(CC) $(CPPFLAGS) -I $(INCLUDE_DIR) -L$(SO_DIR) -lBinaryString ${SRC_DIR}/BinaryStringTest.cpp -o ${TEST_DIR}/BinaryStringTest
 
 HexStringTest: ${SRC_DIR}/HexStringTest.cpp
-	$(CC) $(CPP_FLAGS) ${SRC_DIR}/HexString.cpp ${SRC_DIR}/HexStringTest.cpp -o ${TEST_DIR}/HexStringTest
+	$(CC) $(CPPFLAGS) -I $(INCLUDE_DIR) -L$(SO_DIR) -lHexString ${SRC_DIR}/HexString.cpp ${SRC_DIR}/HexStringTest.cpp -o ${TEST_DIR}/HexStringTest
 
 clean:
 	rm -rf ./build
