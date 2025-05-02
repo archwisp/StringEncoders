@@ -6,7 +6,7 @@ The test functions are included in the library itself so they can eaily be calle
 # Testing
 The following command will build and run the unit tests for the encoders.
 
-```
+```bash
 make clean && make && make run-tests
 ```
 
