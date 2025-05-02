@@ -1,5 +1,5 @@
 # StringEncoders
-This library provides binary and hex string encoding function. 
+This C++ library provides binary and hex string encoding function. 
 
 The test functions are included in the library itself so they can eaily be called during device self-tests.
 
