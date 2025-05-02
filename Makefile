@@ -35,10 +35,10 @@ HexStringShared: ${SRC_DIR}/HexString.cpp
 	$(shell cp ./include/HexString.h $(INCLUDE_DIR)/HexString.h)
 
 BinaryStringTest: ${SRC_DIR}/BinaryStringTest.cpp
-	$(CC) $(CPPFLAGS) -I $(INCLUDE_DIR) -L$(SO_DIR) -lBinaryString ${SRC_DIR}/BinaryStringTest.cpp -o ${TEST_DIR}/BinaryStringTest
+	$(CC) $(CPPFLAGS) -I $(INCLUDE_DIR) -L$(SO_DIR) ${SRC_DIR}/BinaryStringTest.cpp -o ${TEST_DIR}/BinaryStringTest -lBinaryString
 
 HexStringTest: ${SRC_DIR}/HexStringTest.cpp
-	$(CC) $(CPPFLAGS) -I $(INCLUDE_DIR) -L$(SO_DIR) -lHexString ${SRC_DIR}/HexString.cpp ${SRC_DIR}/HexStringTest.cpp -o ${TEST_DIR}/HexStringTest
+	$(CC) $(CPPFLAGS) -I $(INCLUDE_DIR) -L$(SO_DIR) ${SRC_DIR}/HexString.cpp ${SRC_DIR}/HexStringTest.cpp -o ${TEST_DIR}/HexStringTest -lHexString
 
 clean:
 	rm -rf ./build
