@@ -44,5 +44,5 @@ clean:
 	rm -rf ./build
 
 run-tests:
-	${TEST_DIR}/BinaryStringTest
-	${TEST_DIR}/HexStringTest
+	LD_LIBRARY_PATH=$(SO_DIR) ${TEST_DIR}/BinaryStringTest
+	LD_LIBRARY_PATH=$(SO_DIR) ${TEST_DIR}/HexStringTest
