@@ -7,7 +7,7 @@ The test functions are included in the library itself so they can eaily be calle
 The following command will build and run the unit tests for the encoders.
 
 ```bash
-make clean && make && make run-tests
+make clean && make all && make run-tests
 ```
 
 Unit test output:
